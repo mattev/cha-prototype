@@ -9,10 +9,20 @@ const app = express();
 const PORT = process.env.PORT || 5173;
 
 // Serve static files from the dist directory with /prototype prefix
-app.use('/prototype', express.static(path.join(__dirname, 'dist')));
+// This must come BEFORE the catch-all route
+app.use('/prototype', express.static(path.join(__dirname, 'dist'), {
+  setHeaders: (res, filepath) => {
+    // Ensure correct MIME types
+    if (filepath.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    } else if (filepath.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css');
+    }
+  }
+}));
 
-// Handle client-side routing - serve index.html for all /prototype routes
-app.get('/prototype/*', (req, res) => {
+// Handle client-side routing - serve index.html for HTML requests only
+app.get('/prototype', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
