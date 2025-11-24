@@ -1,3 +1,5 @@
+# nixpacks configuration for Railway deployment
+# Build version: 2024-11-24 - Fixed vite base path for root deployment
 [phases.setup]
 nixPkgs = ['nodejs_20']
 
