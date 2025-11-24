@@ -4,7 +4,7 @@ import { App } from "./App";
 export function AppRouter() {
   return <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />} />
+          <Route path="/*" element={<App />} />
         </Routes>
     </BrowserRouter>;
 }
